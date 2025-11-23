@@ -216,6 +216,44 @@
 <footer>
     <p>© 2025 Abner Gabriel – Desenvolvedor Frontend</p>
 </footer>
+<script>
+    // Seleciona a DIV onde os projetos ficam
+const grid = document.querySelector(".projects-grid");
 
+// Busca os repositórios do GitHub
+fetch("https://api.github.com/users/jhin1v9/repos")
+    .then(res => res.json())
+    .then(repos => {
+
+        repos.forEach(repo => {
+
+            // FILTRO: só mostrar repositórios cujo nome contenha "projeto"
+            if (repo.name.toLowerCase().includes("projeto")) {
+
+                // Evitar duplicar projetos que você já colocou manualmente
+                let jaExiste = [...document.querySelectorAll(".project-card")]
+                    .some(card => card.querySelector("h3").textContent.trim().toLowerCase() === repo.name.toLowerCase());
+
+                if (jaExiste) return;
+
+                // Criar o card no mesmo estilo existente
+                const card = document.createElement("a");
+                card.classList.add("project-card");
+                card.href = repo.html_url;
+                card.target = "_blank";
+
+                card.innerHTML = `
+                    <h3>${repo.name.replace(/-/g, " ").replace(/projeto/gi, "Projeto")}</h3>
+                    <p>${repo.description || "Projeto sem descrição"}</p>
+                `;
+
+                // Inserir NO FINAL da lista
+                grid.appendChild(card);
+            }
+
+        });
+
+    });
+</script>
 </body>
 </html>
