@@ -239,7 +239,9 @@ fetch("https://api.github.com/users/jhin1v9/repos")
                 // Criar o card no mesmo estilo existente
                 const card = document.createElement("a");
                 card.classList.add("project-card");
-                card.href = repo.html_url;
+
+                // LINK DO SITE (GitHub Pages)
+                card.href = `https://jhin1v9.github.io/${repo.name}/`;
                 card.target = "_blank";
 
                 card.innerHTML = `
@@ -254,6 +256,7 @@ fetch("https://api.github.com/users/jhin1v9/repos")
         });
 
     });
+
 </script>
 </body>
 </html>
