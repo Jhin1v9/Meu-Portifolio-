@@ -188,7 +188,7 @@
 
         <div class="flex items-center gap-3 pt-2">
           <a
-            href="https://api.whatsapp.com/send/?phone=685093192"
+            href="https://api.whatsapp.com/send/?phone=34685093192"
             class="btn inline-flex items-center text-center justify-center px-4 py-2 rounded-full bg-gradient-to-r from-brandBlue via-brandCyan to-sky-400 text-slate-950 font-semibold text-sm shadow-[0_0_35px_rgba(56,189,248,0.55)] hover:shadow-[0_0_45px_rgba(56,189,248,0.8)] hover:translate-y-[-1px] transition"
           >
             Contactar via WhatsApp
@@ -786,6 +786,16 @@
   // Seleciona a DIV onde os projetos ficam
   const grid = document.querySelector(".projects-grid");
 
+  // 🔥 REPOS QUE VOCÊ QUER IGNORAR (não aparecem na lista)
+  // Troca esses nomes pelos NOMES EXATOS que aparecem no GitHub
+  const ignoredRepos = new Set([
+    "netflixlanding-page",   // exemplo: ajuste para o nome certo
+    "netfclixlanding-page",  // se o teu tiver outro nome, troca aqui
+    "binerinformatica",
+    "binerinformaticas",
+    "ProjetoSite"
+  ]);
+
   // Busca TODOS os repositórios do GitHub
   fetch(
     "https://api.github.com/users/jhin1v9/repos?per_page=100&sort=created&direction=desc"
@@ -793,7 +803,11 @@
     .then((res) => res.json())
     .then((repos) => {
       repos.forEach((repo) => {
+        // Ignorar forks
         if (repo.fork) return;
+
+        // Ignorar os que estão na lista de bloqueados
+        if (ignoredRepos.has(repo.name.toLowerCase())) return;
 
         const urlDoRepo = `https://jhin1v9.github.io/${repo.name}/`;
 
@@ -823,8 +837,6 @@
 
         grid.appendChild(card);
       });
-
-      attachCardScanHandlers();
     })
     .catch((err) => {
       console.error("Erro ao buscar repositórios do GitHub:", err);
@@ -842,81 +854,8 @@
       .map((palavra) => palavra.charAt(0).toUpperCase() + palavra.slice(1))
       .join(" ");
   }
-
-  // Mostra um aviso dentro do card: "Toque de novo para abrir"
-  function showHint(card) {
-    let hint = card.querySelector(".card-hint");
-
-    if (!hint) {
-      hint = document.createElement("div");
-      hint.className =
-        "card-hint pointer-events-none absolute bottom-2 right-2 rounded-full bg-black border border-brandCyan/70 px-3 py-[3px] text-[0.65rem] text-brandCyan shadow-[0_0_14px_rgba(15,23,42,0.9)] opacity-0 transition-opacity duration-150";
-      hint.textContent = "Toque de novo para abrir";
-      card.appendChild(hint);
-    }
-
-    // exibe o hint rapidinho
-    requestAnimationFrame(() => {
-      hint.classList.remove("opacity-0");
-      hint.classList.add("opacity-100");
-    });
-
-    // some depois de ~1.2s
-    setTimeout(() => {
-      hint.classList.remove("opacity-100");
-      hint.classList.add("opacity-0");
-    }, 1200);
-  }
-
-  function attachCardScanHandlers() {
-    const cards = document.querySelectorAll(".project-card");
-
-    // controle global de double-tap
-    let lastTappedCard = null;
-    let lastTapTime = 0;
-
-    cards.forEach((card) => {
-      if (card.dataset.scanBound === "true") return;
-      card.dataset.scanBound = "true";
-
-      const activateScan = () => {
-        cards.forEach((c) => c.classList.remove("card-active"));
-        card.classList.add("card-active");
-        setTimeout(() => {
-          card.classList.remove("card-active");
-        }, 1200);
-      };
-
-      card.addEventListener("click", (e) => {
-        const isMobile = window.innerWidth <= 768;
-        const now = Date.now();
-
-        if (!isMobile) {
-          // DESKTOP: deixa o link funcionar normal, scan via :hover
-          return;
-        }
-
-        // MOBILE: lógica de double-tap
-        if (lastTappedCard === card && now - lastTapTime < 800) {
-          // segundo toque: deixa navegar
-          lastTappedCard = null;
-          lastTapTime = 0;
-          return;
-        }
-
-        // primeiro toque: só scan + hint, sem navegar
-        e.preventDefault();
-        lastTappedCard = card;
-        lastTapTime = now;
-        activateScan();
-        showHint(card);
-      });
-    });
-  }
-
-  // ligar nos cards manuais (já no HTML)
-  attachCardScanHandlers();
 </script>
+
 
 
 </body>
