@@ -52,81 +52,7 @@
     <div class="projects-grid">
 
         <!-- PROJETOS EXISTENTES -->
-        <a class="project-card" href="https://jhin1v9.github.io/Projeto-Relogio/" target="_blank">
-            <h3>Relógio Digital</h3>
-            <p>HTML, CSS e JavaScript</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/ProjetoQuadrodeDesenho/" target="_blank">
-            <h3>Quadro de Desenho</h3>
-            <p>Ferramenta interativa com JS</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/projeto-1---bateria/" target="_blank">
-            <h3>Bateria Virtual</h3>
-            <p>Efeitos sonoros com JavaScript</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/projetoJogodaVelha/" target="_blank">
-            <h3>Jogo da Velha</h3>
-            <p>Lógica e animações em JS</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/projetoClima/" target="_blank">
-            <h3>App de Clima</h3>
-            <p>Consumo de API</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/ProjetoQuizzJScript/" target="_blank">
-            <h3>Quiz Interativo</h3>
-            <p>JS + lógica de perguntas</p>
-        </a>
-
-        <!-- NOVOS PROJETOS -->
-        <a class="project-card" href="https://jhin1v9.github.io/Starbucks/" target="_blank">
-            <h3>Clone Starbucks</h3>
-            <p>Layout moderno, HTML, CSS, JS</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/awaxfinalized/" target="_blank">
-            <h3>Awax Landing Page</h3>
-            <p>Page completa com sections e responsividade</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/portifolioexercicio/" target="_blank">
-            <h3>Portfólio Exercício</h3>
-            <p>HTML, CSS, responsividade</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/clonepesquisadogoogle/" target="_blank">
-            <h3>Clone Pesquisa Google</h3>
-            <p>Interface Google Search recriada</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/clonepaginainicialgoogle/" target="_blank">
-            <h3>Clone Página Inicial Google</h3>
-            <p>HTML + CSS – interface fiel</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/ProjetoSite/" target="_blank">
-            <h3>Projeto Site Completo</h3>
-            <p>Site estruturado, CSS avançado</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/b7burguer/" target="_blank">
-            <h3>B7 Burguer</h3>
-            <p>Landing page moderna + responsiva</p>
-        </a>
-
-        <a class="project-card" href="https://jhin1v9.github.io/MedicenterProject/" target="_blank">
-            <h3>Medicenter</h3>
-            <p>Site institucional completo</p>
-        </a>
-        <a class="project-card" href="https://jhin1v9.github.io/Projeto-7-drag-and-drop/">
-            <h3>Projeto Arrasta e Solta</h3>
-            <p>Project drag and drop Jscript</p>
-        </a>
-
+    
     </div>
 </section>
 
@@ -217,53 +143,52 @@
     <p>© 2025 Abner Gabriel – Desenvolvedor Frontend</p>
 </footer>
 <script>
-    // Seleciona a DIV onde os projetos ficam
-const grid = document.querySelector(".projects-grid");
+  // Seleciona a DIV onde os projetos ficam
+  const grid = document.querySelector(".projects-grid");
 
-// Define a data de ontem
-const ontem = new Date();
-ontem.setDate(ontem.getDate() - 1);
-
-// Busca os repositórios do GitHub
-fetch("https://api.github.com/users/jhin1v9/repos")
+  // Busca TODOS os repositórios do GitHub
+  fetch("https://api.github.com/users/jhin1v9/repos?per_page=100&sort=created&direction=desc")
     .then(res => res.json())
     .then(repos => {
 
-        repos.forEach(repo => {
+      repos.forEach(repo => {
+        // (Opcional) ignorar forks, se você não quiser mostrar
+        if (repo.fork) return;
 
-            // FILTRO 1: nome deve ter "projeto"
-            if (!repo.name.toLowerCase().includes("projeto")) return;
+        // Evitar duplicar projetos que você já colocou manualmente
+        const urlDoRepo = `https://jhin1v9.github.io/${repo.name}/`;
 
-            // FILTRO 2: apenas projetos criados A PARTIR DE ONTEM
-            const dataCriacao = new Date(repo.created_at);
-            if (dataCriacao < ontem) return; // IGNORA se for antigo
+        const jaExiste = [...document.querySelectorAll(".project-card")]
+          .some(card => card.href === urlDoRepo);
+        if (jaExiste) return;
 
-            // Evitar duplicar projetos já manuais
-            let jaExiste = [...document.querySelectorAll(".project-card")]
-                .some(card => 
-                    card.querySelector("h3").textContent.trim().toLowerCase() === repo.name.toLowerCase()
-                );
-            if (jaExiste) return;
+        // Criar o card
+        const card = document.createElement("a");
+        card.classList.add("project-card");
+        card.href = urlDoRepo;
+        card.target = "_blank";
 
-            // Criar o card
-            const card = document.createElement("a");
-            card.classList.add("project-card");
+        card.innerHTML = `
+          <h3>${formatarNome(repo.name)}</h3>
+          <p>${repo.description || "Projeto sem descrição"}</p>
+        `;
 
-            // Link do GitHub Pages
-            card.href = `https://jhin1v9.github.io/${repo.name}/`;
-            card.target = "_blank";
+        grid.appendChild(card);
+      });
 
-            card.innerHTML = `
-                <h3>${repo.name.replace(/-/g, " ").replace(/projeto/gi, "Projeto")}</h3>
-                <p>${repo.description || "Projeto sem descrição"}</p>
-            `;
-
-            grid.appendChild(card);
-        });
-
+    })
+    .catch(err => {
+      console.error("Erro ao buscar repositórios do GitHub:", err);
     });
 
-
+  // Deixa o nome mais bonitinho: tira hífen, capitaliza e arruma "projeto"
+  function formatarNome(nome) {
+    return nome
+      .replace(/-/g, " ")
+      .replace(/projeto/gi, "Projeto")
+      .replace(/\b\w/g, l => l.toUpperCase());
+  }
 </script>
+
 </body>
 </html>
