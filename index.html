@@ -152,12 +152,12 @@
     .then(repos => {
 
       repos.forEach(repo => {
-        // (Opcional) ignorar forks, se você não quiser mostrar
+        // (Opcional) ignorar forks
         if (repo.fork) return;
 
-        // Evitar duplicar projetos que você já colocou manualmente
         const urlDoRepo = `https://jhin1v9.github.io/${repo.name}/`;
 
+        // Evitar duplicar projetos já existentes na página
         const jaExiste = [...document.querySelectorAll(".project-card")]
           .some(card => card.href === urlDoRepo);
         if (jaExiste) return;
@@ -181,14 +181,20 @@
       console.error("Erro ao buscar repositórios do GitHub:", err);
     });
 
-  // Deixa o nome mais bonitinho: tira hífen, capitaliza e arruma "projeto"
+  // Formata o nome conforme as regras pedidas
   function formatarNome(nome) {
-    return nome
-      .replace(/-/g, " ")
-      .replace(/projeto/gi, "Projeto")
-      .replace(/\b\w/g, l => l.toUpperCase());
+    let tratado = nome.replace(/[-_]+/g, " ");
+    tratado = tratado.replace(/([a-z])([A-Z])/g, "$1 $2");
+    tratado = tratado.replace(/\s+/g, " ").trim();
+
+    return tratado
+      .toLowerCase()
+      .split(" ")
+      .map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1))
+      .join(" ");
   }
 </script>
+
 
 </body>
 </html>
