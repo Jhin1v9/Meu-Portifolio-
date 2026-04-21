@@ -130,7 +130,7 @@ function Hero() {
         transition={{ duration: 0.55, delay: 0.12 }}
       >
         <div className="profile-media">
-          <img src="/images/abner.jpeg" alt="Foto de Abner Gabriel" />
+          <img src={`${import.meta.env.BASE_URL}images/abner.jpeg`} alt="Foto de Abner Gabriel" />
         </div>
         <div className="profile-content">
           <span className="availability">Disponível para oportunidades júnior</span>

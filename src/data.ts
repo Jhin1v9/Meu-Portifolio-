@@ -17,6 +17,8 @@ export interface Certificate {
   hours?: string;
 }
 
+const imageUrl = (fileName: string) => `${import.meta.env.BASE_URL}images/${fileName}`;
+
 export const modernProjects: Project[] = [
   {
     title: 'TPV Sorveteria Demo',
@@ -117,60 +119,60 @@ export const classicProjects: Project[] = [
 export const certificates: Certificate[] = [
   {
     title: 'HTML5 + CSS3',
-    image: '/images/certificado abner html5 css3 89h.png',
+    image: imageUrl('certificado abner html5 css3 89h.png'),
     url: 'https://app.b7web.com.br/certificates/9232339',
     hours: '89h',
   },
   {
     title: 'HTML/CSS - Básico ao Avançado',
-    image: '/images/html e css avançado 24h.png',
+    image: imageUrl('html e css avançado 24h.png'),
     url: 'https://app.b7web.com.br/certificates/11800720-142a-4841-8059-848b05549629',
     hours: '24h',
   },
   {
     title: 'HTML5/CSS3',
-    image: '/images/html5 css 3 44h.png',
+    image: imageUrl('html5 css 3 44h.png'),
     url: 'https://app.b7web.com.br/certificates/9cd66e9c-6b8f-46c6-8dc8-46462aad3f1e',
     hours: '44h',
   },
   {
     title: 'Projeto Starbucks - Grid',
-    image: '/images/projeto starbucks 3h.png',
+    image: imageUrl('projeto starbucks 3h.png'),
     url: 'https://app.b7web.com.br/certificates/a7d89284-8356-491c-a0eb-b4c46b12663d',
     hours: '3h',
   },
   {
     title: 'Fundamentos em HTML/CSS',
-    image: '/images/fundamentos html css 12h.png',
+    image: imageUrl('fundamentos html css 12h.png'),
     url: 'https://app.b7web.com.br/certificates/25376c7e-8b4f-43ca-a93f-f61cb5d102d8',
     hours: '12h',
   },
   {
     title: 'Projeto HTML/CSS B7 Burguer',
-    image: '/images/projeto b7 burguer 3h.png',
+    image: imageUrl('projeto b7 burguer 3h.png'),
     url: 'https://app.b7web.com.br/certificates/a5afc775-c635-47e4-a7ca-5dc4ffab6a2d',
     hours: '3h',
   },
   {
     title: 'Fundamentos do JavaScript',
-    image: '/images/fundamentos javascript 12h.png',
+    image: imageUrl('fundamentos javascript 12h.png'),
     url: 'https://app.b7web.com.br/certificates/7f8d2bfa-6054-4e57-afdc-b43a56922720',
     hours: '12h',
   },
   {
     title: 'JavaScript Avançado',
-    image: '/images/java script avançado 17h.png',
+    image: imageUrl('java script avançado 17h.png'),
     url: 'https://app.b7web.com.br/certificates/ad6c0aee-bb08-4015-8ff1-a89fc9daaa54',
     hours: '17h',
   },
   {
     title: 'JavaScript - 7 Projetos em 7 Dias',
-    image: '/images/7 projetos 7 dias JavaScript.png',
+    image: imageUrl('7 projetos 7 dias JavaScript.png'),
     url: 'https://app.b7web.com.br/certificates/d0cb0394-e811-4fdd-9427-6d48420cad89',
   },
   {
     title: 'Fundamentos do Tailwind',
-    image: '/images/Fundamentos do Tailwind 3hrs.png',
+    image: imageUrl('Fundamentos do Tailwind 3hrs.png'),
     url: 'https://app.b7web.com.br/certificates/cea203ed-a021-4366-a0c1-535ae480b72f',
     hours: '3h',
   },
