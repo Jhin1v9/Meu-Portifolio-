@@ -12,9 +12,10 @@ import {
   MapPin,
   MessageCircle,
   Search,
-  Sparkles,
+  TerminalSquare,
 } from 'lucide-react';
 import { certificates, classicProjects, modernProjects, Project, skills } from './data';
+import LabScene from './LabScene';
 
 type Filter = 'all' | 'modern' | 'classic';
 
@@ -45,6 +46,7 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <CommandDeck />
         <TrustBar />
         <ProjectsSection
           filter={filter}
@@ -82,6 +84,7 @@ function Header() {
 function Hero() {
   return (
     <section id="top" className="hero-section">
+      <LabScene />
       <div className="hero-copy">
         <motion.p
           className="eyebrow"
@@ -96,7 +99,7 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.08 }}
         >
-          Interfaces rápidas, publicadas de verdade e prontas para impressionar.
+          Um portfólio que já se comporta como produto em produção.
         </motion.h1>
         <motion.p
           className="hero-text"
@@ -104,9 +107,8 @@ function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.16 }}
         >
-          Sou Abner Gabriel Ribeiro Mendes, desenvolvedor frontend júnior em Sabadell. Trabalho com React,
-          TypeScript, Vite, Next.js e deploy em Vercel, transformando ideias em experiências web claras,
-          responsivas e bem cuidadas.
+          Sou Abner Gabriel Ribeiro Mendes. Construo interfaces com React, TypeScript, Vite, Next.js e Vercel,
+          com foco em experiências que abrem rápido, explicam valor em segundos e deixam rastro técnico.
         </motion.p>
         <motion.div
           className="hero-actions"
@@ -140,6 +142,32 @@ function Hero() {
           </p>
         </div>
       </motion.aside>
+    </section>
+  );
+}
+
+function CommandDeck() {
+  const commands = [
+    ['scan --repos', '20 projetos indexados'],
+    ['route --frameworks', '9 apps em Vercel'],
+    ['build --target pages', 'GitHub Pages com CI'],
+    ['ship --portfolio', 'React + Vite + 3D'],
+  ];
+
+  return (
+    <section className="command-deck" aria-label="Console de status do portfólio">
+      <div className="terminal-head">
+        <TerminalSquare size={18} />
+        <span>portfolio-lab@production</span>
+      </div>
+      <div className="command-grid">
+        {commands.map(([command, result]) => (
+          <div key={command} className="command-line">
+            <code>{command}</code>
+            <span>{result}</span>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
@@ -292,7 +320,7 @@ function CertificatesSection() {
       <div className="cert-grid">
         {certificates.map((certificate) => (
           <a key={certificate.url} className="cert-card" href={certificate.url} target="_blank" rel="noreferrer">
-            <img src={certificate.image} alt={`Certificado ${certificate.title}`} loading="lazy" />
+            <img src={certificate.image} alt={`Certificado ${certificate.title}`} />
             <div>
               <h3>{certificate.title}</h3>
               {certificate.hours && <span>{certificate.hours}</span>}

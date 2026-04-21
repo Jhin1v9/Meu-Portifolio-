@@ -12,6 +12,8 @@ export default defineConfig({
           react: ['react', 'react-dom'],
           motion: ['framer-motion'],
           icons: ['lucide-react'],
+          three: ['three'],
+          r3f: ['@react-three/fiber'],
         },
       },
     },
