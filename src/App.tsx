@@ -126,20 +126,16 @@ function Hero() {
       </div>
 
       <motion.aside
-        className="profile-panel"
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.55, delay: 0.12 }}
+        className="profile-chip"
+        initial={{ opacity: 0, scale: 0.92, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.18 }}
       >
-        <div className="profile-media">
-          <img src={`${import.meta.env.BASE_URL}images/abner.jpeg`} alt="Foto de Abner Gabriel" />
-        </div>
-        <div className="profile-content">
+        <img src={`${import.meta.env.BASE_URL}images/abner.jpeg`} alt="Foto de Abner Gabriel" />
+        <div>
           <span className="availability">Disponível para oportunidades júnior</span>
-          <h2>Abner Gabriel Ribeiro Mendes</h2>
-          <p>
-            23 anos, Sabadell - Barcelona. Português, espanhol, catalão avançado, inglês e japonês em evolução.
-          </p>
+          <strong>Abner Gabriel Ribeiro Mendes</strong>
+          <p>Sabadell - Barcelona</p>
         </div>
       </motion.aside>
     </section>
